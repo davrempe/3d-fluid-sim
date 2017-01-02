@@ -1,0 +1,41 @@
+*.db
+*.opendb
+FluidSim3D/packages/*
+FluidSim3D/Debug/*
+FluidSim3D/FluidSim3D/Debug/*
+FluidSim3D/.vs/*
+FluidSim3D/FluidSim3D/particle_data*
+FluidSim3D/x64/*
+FluidSim3D/FluidSim3D/x64/*
+FluidSim3D/Release/*
+FluidSim3D/FluidSim3D/Release/*
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
