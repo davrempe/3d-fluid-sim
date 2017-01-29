@@ -5,7 +5,7 @@
 
 static char* readShaderSource(const char* shaderFile)
 {
-	FILE* fp = fopen(shaderFile, "r");
+	FILE* fp = fopen(shaderFile, "rb");
 
 	if (fp == NULL) { return NULL; }
 
@@ -14,7 +14,7 @@ static char* readShaderSource(const char* shaderFile)
 
 	fseek(fp, 0L, SEEK_SET);
 	char* buf = new char[size + 1];
-	fread(buf, 1, size, fp);
+	size_t test = fread(buf, 1, size, fp);
 
 	buf[size] = '\0';
 	fclose(fp);
