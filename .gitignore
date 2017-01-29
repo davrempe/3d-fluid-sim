@@ -5,6 +5,7 @@ FluidSim3D/Debug/*
 FluidSim3D/FluidSim3D/Debug/*
 FluidSim3D/.vs/*
 FluidSim3D/FluidSim3D/particle_data*
+FluidSim3D/FluidSim3D/FluidSim3D.vcxproj
 FluidSim3D/x64/*
 FluidSim3D/FluidSim3D/x64/*
 FluidSim3D/Release/*
