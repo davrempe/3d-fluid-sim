@@ -9,7 +9,7 @@
 #include "SimUtil.h"
 
 
-class FluidSolver2D {
+class FluidSolver3D {
 
 private:
 	//----------------------------------------------------------------------
@@ -20,9 +20,11 @@ private:
 	int m_gridWidth;
 	// ny
 	int m_gridHeight;
+	// nz
+	int m_gridDepth;
 	// distance between each grid cell
 	float m_dx;
-	// grid of cell labels, size (nx, ny)
+	// grid of cell labels, size (nx, ny, nz)
 	SimUtil::Mat2Di m_label;
 
 	// pressure and velocity are held in a MAC grid so that
@@ -118,8 +120,8 @@ public:
 	dx - the grid cell width
 	dt - the timestep to use
 	*/
-	FluidSolver2D(int, int, float, float);
-	~FluidSolver2D();
+	FluidSolver3D(int, int, float, float);
+	~FluidSolver3D();
 
 	/*
 	Initializes the solver by reading in and constructing initial

@@ -13,52 +13,70 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{ac263874-880b-4bc8-af9a-05633598019e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="frag.glsl" />
-    <None Include="vert.glsl" />
-    <None Include="FluidSim2D.aps" />
+    <None Include="frag.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="vert.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FluidRenderer2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FluidSim2dMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FluidSolver2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LoadProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FluidRenderer3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FluidSim3dMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FluidSolver3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FluidRenderer2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FluidSolver2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LoadProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="FluidRenderer3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FluidSolver3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="init_geom3.txt" />
-    <Text Include="init_geom4.txt" />
-    <Text Include="init_geom5.txt" />
-    <Text Include="initial_geom2.txt" />
-    <Text Include="initial_geometry.txt" />
+    <Text Include="init_geom3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="init_geom4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="init_geom5.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="initial_geom2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="initial_geometry.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="obj_test.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
   </ItemGroup>
 </Project>

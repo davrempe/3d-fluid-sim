@@ -1,5 +1,5 @@
-#include "FluidRenderer2d.h"
-#include "FluidSolver2d.h"
+#include "FluidRenderer3d.h"
+#include "FluidSolver3d.h"
 #include "LoadProgram.h"
 
 #include <gl/glut.h>
@@ -11,7 +11,7 @@
 #include <sstream>
 
 // current instance of the renderer
-FluidRenderer2D* g_rendererContext;
+FluidRenderer3D* g_rendererContext;
 
 extern "C"
 void displayCallback() {
@@ -23,7 +23,7 @@ void timerCallback(int id) {
 	g_rendererContext->timer(id);
 }
 
-FluidRenderer2D::FluidRenderer2D(std::string geomFile, std::string particleFile, float frameRate, int gridWidth, int gridHeight, float cellWidth) : m_geomFile(geomFile), m_particleFile(particleFile), m_width(gridWidth), m_height(gridHeight), m_dx(cellWidth) {
+FluidRenderer3D::FluidRenderer3D(std::string geomFile, std::string particleFile, float frameRate, int gridWidth, int gridHeight, float cellWidth) : m_geomFile(geomFile), m_particleFile(particleFile), m_width(gridWidth), m_height(gridHeight), m_dx(cellWidth) {
 	// initialize vertex data arrays
 	m_particleVertData = new VertexData[1];
 
@@ -31,18 +31,18 @@ FluidRenderer2D::FluidRenderer2D(std::string geomFile, std::string particleFile,
 	m_frameTime = 1.0f / frameRate;
 }
 
-FluidRenderer2D::~FluidRenderer2D() {
+FluidRenderer3D::~FluidRenderer3D() {
 	delete[] m_particleVertData;
 	delete[] m_solidVertData;
 	delete[] m_solidIndData;
 }
 
-void FluidRenderer2D::init(int argc, char** argv) {
+void FluidRenderer3D::init(int argc, char** argv) {
 	// read in particle data to array
 	readInParticleData();
 	// read in geometry data
 	m_geomGrid = SimUtil::initGrid2D<int>(m_width, m_height);
-	SimUtil::readInGeom(m_width, m_height, m_geomFile, m_geomGrid);
+	SimUtil::readInGeom2D(m_width, m_height, m_geomFile, m_geomGrid);
 
 	// set up glut and glew
 	glutInit(&argc, argv);
@@ -65,7 +65,7 @@ void FluidRenderer2D::init(int argc, char** argv) {
 
 }
 
-void FluidRenderer2D::render() {
+void FluidRenderer3D::render() {
 	glutMainLoop();
 }
 
@@ -80,7 +80,7 @@ given frameNum % totalNumFrames.
 Args:
 - frameNum - the frame to update the array with
 */
-void FluidRenderer2D::updateParticleVertexData(int frameNum) {
+void FluidRenderer3D::updateParticleVertexData(int frameNum) {
 	int totalFrames = m_particlePosData.size();
 	// clear array from previous frame
 	delete[] m_particleVertData;
@@ -99,7 +99,7 @@ void FluidRenderer2D::updateParticleVertexData(int frameNum) {
 /*
 Fills array of solid VertexData and index data with the solid objects.
 */
-void FluidRenderer2D::initSolidVertexData() {
+void FluidRenderer3D::initSolidVertexData() {
 	// max size is if every cell in the grid solid
 	m_solidVertData = new VertexData[m_width*m_height * VERTICES_PER_QUAD];
 	m_solidIndData = new GLushort[m_width*m_height * INDICES_PER_QUAD];
@@ -141,7 +141,7 @@ void FluidRenderer2D::initSolidVertexData() {
 /*
 Updates the buffers for the current frame being rendered.
 */
-void FluidRenderer2D::updateBufferData(int frameNum) {
+void FluidRenderer3D::updateBufferData(int frameNum) {
 	// first update the particle data for this frame
 	updateParticleVertexData(frameNum);
 
@@ -155,7 +155,7 @@ void FluidRenderer2D::updateBufferData(int frameNum) {
 /*
 Initializes OpenGL for use by initializing buffers, shaders, and attributes.
 */
-void FluidRenderer2D::initGL() {
+void FluidRenderer3D::initGL() {
 	// enable blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -205,14 +205,14 @@ void FluidRenderer2D::initGL() {
 }
 
 // called at certain time increments to redraw and calculate fps
-void FluidRenderer2D::timer(int id) {
+void FluidRenderer3D::timer(int id) {
 	glutPostRedisplay();
 }
 
 /*
 Renders current particle and solid data.
 */
-void FluidRenderer2D::display() {
+void FluidRenderer3D::display() {
 	
 	// update buffer data
 	updateBufferData(m_currentFrame);
@@ -259,7 +259,7 @@ void FluidRenderer2D::display() {
 Reads in particle position data from the particle file and uses it to initialize
 the particle position data array.
 */
-void FluidRenderer2D::readInParticleData() {
+void FluidRenderer3D::readInParticleData() {
 	std::cout << "Reading in particle data for..." << std::endl;
 	// open the particle data file
 	std::ifstream particleFile(m_particleFile);
@@ -295,7 +295,7 @@ void FluidRenderer2D::readInParticleData() {
 Splits a string based on delimeter.
 Grabbed from http://stackoverflow.com/a/236803.
 */
-void FluidRenderer2D::strSplit(const std::string &s, char delim, std::vector<std::string> &elems) {
+void FluidRenderer3D::strSplit(const std::string &s, char delim, std::vector<std::string> &elems) {
 	std::stringstream ss;
 	ss.str(s);
 	std::string item;

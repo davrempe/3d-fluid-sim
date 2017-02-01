@@ -156,7 +156,34 @@ namespace SimUtil {
 	geomFile - the file containing the geometry
 	grid - the 2D array to put the initial grid in
 	*/
-	void readInGeom(int, int, std::string, SimUtil::Mat2Di);
+	void readInGeom2D(int, int, std::string, SimUtil::Mat2Di);
+
+	/*
+	Builds initial grid of dimensions (x, y, z) that contains the initial
+	geometry for the system to simulate by labeling each cell as FLUID, AIR, or SOLID.
+	The initial geometry file is a .OBJ file that should contain two face groups, one named
+	"fluid" and one named "solid". Only vertex and texture coordinates should be in the file, NO normals.
+	These groups define a closed mesh that is the initial geometry
+	of each. Vertices are assumed to be in meter units within a coordinate system around origin
+	(0, 0, 0) with axes defined just like in OpenGL:
+
+			^ y
+			|
+			|
+	(0,0,0)	-------> x
+		   /
+	      /
+		z
+
+	The grid will be defined such that the back left corner lies at the origin. All vertices defined
+	in the geometry file should be on the edge or within the dimensions of the grid.
+	Args:
+	x, y, z - grid dimensions in number of cells
+	dx - single cell dimension
+	geomFile - the name of the .OBJ file to read in
+	grid - the 3D array to place the initial geometry labels in
+	*/
+	void readInGeom3D(int, int, int, float, std::string, SimUtil::Mat3Di);
 
 	/*
 	Finds the physical location of the cell with index [x][y]

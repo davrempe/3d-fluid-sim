@@ -15,7 +15,6 @@ FluidSim3D/FluidSim3D/Release/*
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch

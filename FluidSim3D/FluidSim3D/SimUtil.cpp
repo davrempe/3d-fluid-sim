@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <limits>
+#include <vector>
 
 namespace SimUtil {
 
@@ -94,7 +95,7 @@ namespace SimUtil {
 		deleteMat3D<T>(x, y, z, grid);
 	}
 
-	void readInGeom(int x, int y, std::string geomFileName, Mat2Di grid) {
+	void readInGeom2D(int x, int y, std::string geomFileName, Mat2Di grid) {
 		// open the geometry file
 		std::ifstream geomFile(geomFileName);
 		if (geomFile.is_open()) {
@@ -120,6 +121,47 @@ namespace SimUtil {
 			geomFile.close();
 		}
 	}
+
+	void readInGeom3D(int x, int y, int z, float dx, std::string geomFileName, SimUtil::Mat3Di grid) {
+		// open the geometry file
+		std::ifstream geomFile(geomFileName);
+		if (geomFile.is_open()) {
+			// all vertices
+			std::vector<Vec3> verts;
+			// tris that make up fluid, these are vec3 of indices in verts list
+			std::vector<Vec3> fluidTris;
+			// tris that make up solid
+			std::vector<Vec3> solidTris;
+
+			std::string lineStr;
+			bool inFluidGroup = false;
+			bool inSolidGroup = false;
+			while (std::getline(geomFile, lineStr)) {
+				char lineType = lineStr[0];
+				
+				// we loop through and collect vertices until we hit a group, which defines faces
+				// then break these faces into tris and depending on group name store in corresponding tri list
+				if (lineType == 'v') {
+					// it's a vertex definition
+
+				} else if (lineType = 'g') {
+					// we're starting a group
+
+				} else if (lineType == 'f') {
+					// it's a face definition
+				} else {
+					// it's something we don't care about, skip to next line
+				}
+
+				// order of vertices in face is sw, se, ne, nw
+			}
+			geomFile.close();
+		}
+
+		// now build level sets for fluid and solid
+		// now label grid based on level sets
+	}
+
 
 	Vec2 getGridCellPosition(float i, float j, float dx) {
 		return Vec2(i*dx + 0.5f*dx, j*dx + 0.5f*dx);

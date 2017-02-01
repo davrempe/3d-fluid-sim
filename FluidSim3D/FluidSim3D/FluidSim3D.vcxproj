@@ -102,6 +102,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Projects\3d-fluid-sim\FluidSim3D\packages\glm.0.9.7.1\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +136,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Projects\3d-fluid-sim\FluidSim3D\packages\glm.0.9.7.1\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,23 +146,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="FluidSim2D.aps" />
     <None Include="frag.glsl" />
     <None Include="packages.config" />
     <None Include="vert.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FluidRenderer2d.cpp" />
-    <ClCompile Include="FluidSim2dMain.cpp" />
-    <ClCompile Include="FluidSolver2d.cpp" />
+    <ClCompile Include="FluidRenderer3d.cpp" />
+    <ClCompile Include="FluidSim3dMain.cpp" />
+    <ClCompile Include="FluidSolver3d.cpp" />
     <ClCompile Include="LoadProgram.cpp" />
     <ClCompile Include="SimUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FluidRenderer2d.h" />
-    <ClInclude Include="FluidSolver2d.h" />
+    <ClInclude Include="FluidRenderer3d.h" />
+    <ClInclude Include="FluidSolver3d.h" />
     <ClInclude Include="LoadProgram.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SimUtil.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +169,9 @@
     <Text Include="init_geom3.txt" />
     <Text Include="init_geom4.txt" />
     <Text Include="init_geom5.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="obj_test.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

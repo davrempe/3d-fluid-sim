@@ -10,7 +10,7 @@
 
 #include "SimUtil.h"
 
-class FluidRenderer2D {
+class FluidRenderer3D {
 
 	struct VertexData {
 		GLfloat vPos[2];
@@ -126,8 +126,8 @@ public:
 	- gridHeight - the height of the simulation grid used
 	- cellWidth - width of a cell in the simulation grid used
 	*/
-	FluidRenderer2D(std::string, std::string, float, int, int, float);
-	~FluidRenderer2D();
+	FluidRenderer3D(std::string, std::string, float, int, int, float);
+	~FluidRenderer3D();
 
 	/*
 	Initializes renderer by reading in geometry/particle data and preparing to render.
