@@ -42,7 +42,7 @@ const float TIME_STEP = 0.01f;
 //----------------------------------------------------------------------
 
 // input file for initial system state - an .obj file created in Maya with "solid" and "fluid" group mesh defined
-const std::string INITIAL_GEOMETRY_FILE_IN = "obj_test.obj";
+const std::string INITIAL_GEOMETRY_FILE_IN = "obj_test.wavobj";
 // output file for particle data
 const std::string PARTICLE_DATA_FILE_OUT = "particle_out.csv";
 // the number of frames to simulate
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 		// open and clear output file
 		std::ofstream *particleOut = new std::ofstream(PARTICLE_DATA_FILE_OUT, std::ofstream::trunc);
 
-		FluidSolver3D solver(GRID_WIDTH, GRID_HEIGHT, GRID_CELL_WIDTH, TIME_STEP);
+		FluidSolver3D solver(GRID_WIDTH, GRID_HEIGHT, GRID_DEPTH, GRID_CELL_WIDTH, TIME_STEP);
 		std::cout << "Simulating Frame 1" << std::endl;
 		solver.init(INITIAL_GEOMETRY_FILE_IN);
 		

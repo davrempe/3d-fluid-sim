@@ -8,7 +8,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 
 // current instance of the renderer
 FluidRenderer3D* g_rendererContext;
@@ -273,11 +272,11 @@ void FluidRenderer3D::readInParticleData() {
 
 			std::getline(particleFile, lineStr);
 			std::vector<std::string> tokens;
-			strSplit(lineStr, ',', tokens);
+			SimUtil::strSplit(lineStr, ',', tokens);
 			for (int i = 0; i < tokens.size(); i++) {
 				// parse particle position (e.g. "0.0345 0.1235")
 				std::vector<std::string> strPos;
-				strSplit(tokens[i], ' ', strPos);
+				SimUtil::strSplit(tokens[i], ' ', strPos);
 				SimUtil::Vec2 pos(atof(strPos[0].c_str()), atof(strPos[1].c_str()));
 				frameVec.push_back(pos);
 			}
@@ -288,18 +287,5 @@ void FluidRenderer3D::readInParticleData() {
 			curFrame++;
 		}
 		particleFile.close();
-	}
-}
-
-/*
-Splits a string based on delimeter.
-Grabbed from http://stackoverflow.com/a/236803.
-*/
-void FluidRenderer3D::strSplit(const std::string &s, char delim, std::vector<std::string> &elems) {
-	std::stringstream ss;
-	ss.str(s);
-	std::string item;
-	while (std::getline(ss, item, delim)) {
-		elems.push_back(item);
 	}
 }

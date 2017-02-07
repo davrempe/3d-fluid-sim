@@ -25,26 +25,30 @@ private:
 	// distance between each grid cell
 	float m_dx;
 	// grid of cell labels, size (nx, ny, nz)
-	SimUtil::Mat2Di m_label;
+	SimUtil::Mat3Di m_label;
 
 	// pressure and velocity are held in a MAC grid so that
 	// p(i, j, k) = p_i_j_k
 	// u(i, j, k) = u_i-1/2_j_k
 	// v(i, j, k) = v_i_j-1/2_k
 
-	// grid of pressures, size (nx, ny)
-	SimUtil::Mat2Df m_p;
-	// grid of vel x component, size (nx+1, ny)
-	SimUtil::Mat2Df m_u;
-	// grid of vel y component, size (nx, ny+1)
-	SimUtil::Mat2Df m_v;
+	// grid of pressures, size (nx, ny, nz)
+	SimUtil::Mat3Df m_p;
+	// grid of vel x component, size (nx+1, ny, nz)
+	SimUtil::Mat3Df m_u;
+	// grid of vel y component, size (nx, ny+1, nz)
+	SimUtil::Mat3Df m_v;
+	// grid of vel z component, size (nx, ny, nz+1)
+	SimUtil::Mat3Df m_w;
 
 	// TODO grids for solid velocity?
 
-	// saved grid of vel x component for FLIP update, size (nx+1, ny)
-	SimUtil::Mat2Df m_uSaved;
-	// saved grid of vel y component for FLIP update, size (nx, ny+1)
-	SimUtil::Mat2Df m_vSaved;
+	// saved grid of vel x component for FLIP update, size (nx+1, ny, nz)
+	SimUtil::Mat3Df m_uSaved;
+	// saved grid of vel y component for FLIP update, size (nx, ny+1, nz)
+	SimUtil::Mat3Df m_vSaved;
+	// saved grid of vel z component for FLIP update, size (nx, ny, nz+1)
+	SimUtil::Mat3Df m_wSaved;
 
 	//----------------------------------------------------------------------
 	// Simulation Attributes
@@ -52,13 +56,13 @@ private:
 
 	const int VEL_UNKNOWN = INT_MIN;
 	// number of particles to seed in each cell at start of sim
-	const int PARTICLES_PER_CELL = 4;
+	const int PARTICLES_PER_CELL = 8;
 	// the amount of weight to give to PIC in PIC/FLIP update
 	const float PIC_WEIGHT = 0.02f;
 	// the maximum number of grid cells a particle should move when advected
 	const int ADVECT_MAX = 1;
 	// acceleration due to gravity
-	const SimUtil::Vec2 GRAVITY = { 0.0f, -9.81f };
+	const SimUtil::Vec3 GRAVITY = { 0.0f, -9.81f, 0.0f };
 	// density of the fluid (kg/m^3)
 	const float FLUID_DENSITY = 1000.0f;
 	// error tolerance for PCG
@@ -74,7 +78,7 @@ private:
 	//----------------------------------------------------------------------
 
 	// list of all particles in the simulation
-	std::vector<SimUtil::Particle2D> *m_particles;
+	std::vector<SimUtil::Particle3D> *m_particles;
 
 	//----------------------------------------------------------------------
 	// Functions
@@ -95,7 +99,7 @@ private:
 	void cleanupParticles(float);
 
 	// helper functions
-	template <typename T> void initGridValues(T**, int, int, T);
+	template <typename T> void initGridValues(T***, int, int, int, T);
 	double trilinearHatKernel(SimUtil::Vec2);
 	double hatFunction(double);
 	double quadBSplineKernel(SimUtil::Vec2);
@@ -117,10 +121,11 @@ public:
 	Args:
 	width - width of the grid to use
 	height - height of the grid to use
+	depth - depth of the grid to use
 	dx - the grid cell width
 	dt - the timestep to use
 	*/
-	FluidSolver3D(int, int, float, float);
+	FluidSolver3D(int, int, int, float, float);
 	~FluidSolver3D();
 
 	/*

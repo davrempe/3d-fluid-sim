@@ -25,6 +25,9 @@
     <None Include="vert.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="obj_test.wavobj">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoadProgram.cpp">
@@ -73,10 +76,5 @@
     <Text Include="initial_geometry.txt">
       <Filter>Resource Files</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="obj_test.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
   </ItemGroup>
 </Project>

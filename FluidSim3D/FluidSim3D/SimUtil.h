@@ -2,6 +2,7 @@
 #define SIM_UTIL_H
 
 #include <string>
+#include <vector>
 
 namespace SimUtil {
 	typedef int** Mat2Di;
@@ -278,6 +279,16 @@ namespace SimUtil {
 	x/y - grid dimensions
 	*/
 	template <typename T> T max(T**, int, int);
+
+	/*
+	Splits a string based on delimeter.
+	Grabbed from http://stackoverflow.com/a/236803.
+	Args:
+	s - the string to split
+	delim - the delimeter to split on
+	elems - a vector to store the tokens in
+	*/
+	void strSplit(const std::string&, char, std::vector<std::string>&);
 }
 
 #endif //SIM_UTIL_H

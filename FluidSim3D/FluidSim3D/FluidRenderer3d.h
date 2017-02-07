@@ -107,7 +107,6 @@ private:
 	//----------------------------------------------------------------------
 
 	void readInParticleData();
-	void strSplit(const std::string&, char, std::vector<std::string>&);
 	void updateParticleVertexData(int);
 	void initSolidVertexData();
 	void updateBufferData(int);

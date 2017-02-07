@@ -4,7 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <limits>
-#include <vector>
+#include <sstream>
 
 namespace SimUtil {
 
@@ -66,7 +66,7 @@ namespace SimUtil {
 		T*** mat = new T**[m];
 		for (int i = 0; i < m; i++) {
 			mat[i] = new T*[n];
-			for (int j = 0; j < l; j++) {
+			for (int j = 0; j < n; j++) {
 				mat[i][j] = new T[l];
 			}
 		}
@@ -123,42 +123,80 @@ namespace SimUtil {
 	}
 
 	void readInGeom3D(int x, int y, int z, float dx, std::string geomFileName, SimUtil::Mat3Di grid) {
+		// all vertices
+		std::vector<Vec3> verts;
+		// tris that make up fluid, these are vec3 of indices in verts list
+		std::vector<Vec3> fluidTris;
+		// tris that make up solid
+		std::vector<Vec3> solidTris;
+		
 		// open the geometry file
 		std::ifstream geomFile(geomFileName);
 		if (geomFile.is_open()) {
-			// all vertices
-			std::vector<Vec3> verts;
-			// tris that make up fluid, these are vec3 of indices in verts list
-			std::vector<Vec3> fluidTris;
-			// tris that make up solid
-			std::vector<Vec3> solidTris;
-
 			std::string lineStr;
 			bool inFluidGroup = false;
 			bool inSolidGroup = false;
 			while (std::getline(geomFile, lineStr)) {
-				char lineType = lineStr[0];
+				std::vector<std::string> tokens;
+				strSplit(lineStr, ' ', tokens);
+				std::string lineType = "";
+				if (tokens.size() > 0) {
+					lineType = tokens[0];
+				}
 				
 				// we loop through and collect vertices until we hit a group, which defines faces
 				// then break these faces into tris and depending on group name store in corresponding tri list
-				if (lineType == 'v') {
+				if (lineType == "v") {
 					// it's a vertex definition
-
-				} else if (lineType = 'g') {
+					// so we're no longer in a group, set both to false just in case
+					inFluidGroup = false;
+					inSolidGroup = false;
+					// now take in vertex
+					Vec3 newVert(std::stof(tokens[1]), std::stof(tokens[2]), std::stof(tokens[3]));
+					verts.push_back(newVert);
+				} else if (lineType == "g") {
 					// we're starting a group
-
-				} else if (lineType == 'f') {
+					// figure out if it's the solid or fluid
+					std::string groupName = tokens[1];
+					if (groupName == "solid") {
+						inSolidGroup = true;
+					} else if (groupName == "fluid") {
+						inFluidGroup = true;
+					}
+				} else if (lineType == "f") {
 					// it's a face definition
+					// go through each "v/vt" to get vertex indices
+					std::vector<int> vertInds(tokens.size() - 1);
+					for (int i = 1; i < tokens.size(); i++) {
+						std::vector<std::string> v_vt;
+						strSplit(tokens[i], '/', v_vt);
+						// first one is vertex index
+						vertInds[i-1] = std::stoi(v_vt[0]);
+					}
+
+					// create 2 tris for face, indices are in order [SW, SE, NE, NW]
+					// must subtract 1 from each index b/c file is 1-indexed and we are 0-indexed
+					Vec3 tri1(vertInds[0] - 1, vertInds[1] -1, vertInds[2] - 1);
+					Vec3 tri2(vertInds[0] - 1, vertInds[2] - 1, vertInds[3] - 1);
+
+					if (inSolidGroup) {
+						solidTris.push_back(tri1);
+						solidTris.push_back(tri2);
+					} else if (inFluidGroup) {
+						fluidTris.push_back(tri1);
+						fluidTris.push_back(tri2);
+					}
 				} else {
 					// it's something we don't care about, skip to next line
 				}
 
-				// order of vertices in face is sw, se, ne, nw
 			}
 			geomFile.close();
 		}
 
 		// now build level sets for fluid and solid
+
+
 		// now label grid based on level sets
 	}
 
@@ -228,6 +266,15 @@ namespace SimUtil {
 		}
 
 		return maxVal;
+	}
+
+	void strSplit(const std::string &s, char delim, std::vector<std::string> &elems) {
+		std::stringstream ss;
+		ss.str(s);
+		std::string item;
+		while (std::getline(ss, item, delim)) {
+			elems.push_back(item);
+		}
 	}
 
 }
